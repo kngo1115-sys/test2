@@ -2,9 +2,7 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
-<!-- 画面の端（ノッチ・ステータスバー領域含む）まで広げる設定 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<!-- フルスクリーン（アプリモード）起動の設定 -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>SMBC</title>
@@ -19,19 +17,20 @@
    html, body {
      width: 100%;
      height: 100%;
-     background-color: #01381b; /* SMBCの緑色 */
+     background-color: #01381b;
      overflow: hidden;
      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Hiragino Kaku Gothic ProN", sans-serif;
    }
-   /* 画面全体を完全に覆うコンテナ */
+   /* 画面全体を完全に覆い、下部のセーフエリアを無視して引き伸ばす */
    .app-container {
      position: fixed;
      top: 0;
      left: 0;
      width: 100vw;
-     height: 100vh;
-     /* 縦横比を無視して画面全体にぴったり引き伸ばす（100% 100%） */
-     background: url('bg.jpg') no-repeat center center;
+     /* 100vhに加えて、下部のインジケータの高さ分（env）をプラスして強制的に下まで伸ばす */
+     height: calc(100vh + env(safe-area-inset-bottom, 34px));
+     background: url('bg.jpg') no-repeat center top;
+     /* 縦横比を固定せず、画面全体に完全にフィットさせる */
      background-size: 100% 100%;
    }
    /* 右上「アプリ内」の時計 */
