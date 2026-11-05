@@ -30,11 +30,11 @@
      left: 0;
      width: 100vw;
      height: 100vh;
+     /* 縦横比を無視して画面全体にぴったり引き伸ばす（100% 100%） */
      background: url('bg.jpg') no-repeat center center;
-     background-size: cover;
-     background-attachment: fixed;
+     background-size: 100% 100%;
    }
-   /* 右上「アプリ内」の時計（位置はお好みで調整してください） */
+   /* 右上「アプリ内」の時計 */
    .app-clock {
      position: absolute;
      top: 22.4vh;
@@ -49,7 +49,7 @@
 </head>
 <body>
 <div class="app-container">
-  <!-- 右上のリアルタイム更新用テキストのみ残す -->
+  <!-- 右上のリアルタイム更新用テキスト -->
   <div class="app-clock" id="app-clock">00:00</div>
 </div>
 <script>
