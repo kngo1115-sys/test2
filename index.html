@@ -19,7 +19,7 @@
      height: 100%;
      background-color: #01381b;
      overflow: hidden;
-     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Hiragino Kaku Gothic ProN", sans-serif;
+     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", sans-serif;
    }
 
    /* 画面全体のレイアウトコンテナ */
@@ -33,10 +33,11 @@
      flex-direction: column;
    }
 
-   /* 上部固定エリア（赤色エリア相当：ヘッダー） */
+   /* 上部固定エリア（ヘッダー） */
    .header-fixed {
+     position: relative;
      width: 100%;
-     height: calc(180px + env(safe-area-inset-top)); /* ヘッダー画像の高さに合わせて調整 */
+     height: calc(180px + env(safe-area-inset-top));
      padding-top: env(safe-area-inset-top);
      background: url('header.jpg') no-repeat center top;
      background-size: 100% auto;
@@ -44,7 +45,19 @@
      z-index: 20;
    }
 
-   /* スクロールする中央エリア（黄色エリア相当） */
+   /* ヘッダー内のiPhone風ステータスバー時計 */
+   .ios-status-clock {
+     position: absolute;
+     top: calc(env(safe-area-inset-top) + 2px);
+     left: 32px;
+     color: #ffffff;
+     font-size: 15px;
+     font-weight: 600;
+     letter-spacing: -0.3px;
+     z-index: 30;
+   }
+
+   /* スクロールする中央エリア（黄色エリア） */
    .scroll-content {
      flex: 1;
      overflow-y: auto;
@@ -53,56 +66,50 @@
      width: 100%;
    }
 
-   /* スクロールエリア内の背景・コンテンツ */
    .scroll-bg {
      width: 100%;
-     min-height: 150%; /* スクロールさせるための高さ */
+     min-height: 150%;
      background: url('content.jpg') no-repeat center top;
      background-size: 100% auto;
      position: relative;
    }
 
-   /* 右上「アプリ内」の時計 */
-   .app-clock {
-     position: absolute;
-     top: 20px;
-     right: 18vw;
-     color: #ffffff;
-     font-size: 13px;
-     font-weight: 400;
-     opacity: 0.9;
-     z-index: 10;
-   }
-
-   /* 下部固定エリア（赤色エリア相当：フッター＆飛び出しボタン） */
+   /* 下部固定エリア（フッター） */
    .footer-fixed {
+     position: relative;
      width: 100%;
-     height: calc(70px + env(safe-area-inset-bottom)); /* フッターバー本体の高さ */
-     padding-bottom: env(safe-area-inset-bottom);
-     background: url('footer.jpg') no-repeat center bottom;
-     background-size: 100% auto;
+     background-color: #ffffff; /* フッター背景を白色に固定 */
+     padding-bottom: env(safe-area-inset-bottom); /* iPhone下部セーフエリア確保 */
      flex-shrink: 0;
      z-index: 20;
-     position: relative;
+   }
+
+   /* フッター画像の配置設定 */
+   .footer-image {
+     display: block;
+     width: 100%;
+     height: auto;
+     pointer-events: none;
    }
 </style>
 </head>
 <body>
 
 <div class="app-container">
-  <!-- 上部固定ヘッダー（赤色） -->
-  <div class="header-fixed"></div>
-
-  <!-- スクロール可能領域（黄色） -->
-  <div class="scroll-content">
-    <div class="scroll-bg">
-      <!-- リアルタイム更新時計 -->
-      <div class="app-clock" id="app-clock">00:00</div>
-    </div>
+  <!-- 上部固定ヘッダー -->
+  <div class="header-fixed">
+    <div class="ios-status-clock" id="ios-status-clock">00:00</div>
   </div>
 
-  <!-- 下部固定フッター（赤色・中央の丸いボタン含む） -->
-  <div class="footer-fixed"></div>
+  <!-- スクロール可能領域 -->
+  <div class="scroll-content">
+    <div class="scroll-bg"></div>
+  </div>
+
+  <!-- 下部固定フッター -->
+  <div class="footer-fixed">
+    <img src="footer.png" alt="footer" class="footer-image">
+  </div>
 </div>
 
 <script>
@@ -111,7 +118,7 @@
      const hours = String(now.getHours()).padStart(2, '0');
      const minutes = String(now.getMinutes()).padStart(2, '0');
      const timeStr = `${hours}:${minutes}`;
-     document.getElementById('app-clock').textContent = timeStr;
+     document.getElementById('ios-status-clock').textContent = timeStr;
    }
    setInterval(updateClock, 1000);
    updateClock();
