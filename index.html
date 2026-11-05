@@ -2,9 +2,11 @@
 <html lang="ja">
 <head>
 <meta charset="UTF-8">
+<!-- 画面の端（ノッチ・ステータスバー領域含む）まで広げる設定 -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<!-- フルスクリーン（アプリモード）起動の設定 -->
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>SMBC</title>
 <style>
    * {
@@ -12,51 +14,50 @@
      padding: 0;
      box-sizing: border-box;
      user-select: none;
+     -webkit-user-select: none;
    }
-   body {
-     background-color: #000;
-     display: flex;
-     justify-content: center;
-     align-items: center;
-     min-height: 100vh;
+   html, body {
+     width: 100%;
+     height: 100%;
+     background-color: #01381b; /* 上下に隙間が出ても馴染むSMBCの緑色 */
      overflow: hidden;
+     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Hiragino Kaku Gothic ProN", sans-serif;
    }
-   /* 背景画像ラッパー */
-   .screen-container {
+   /* 画面全体を覆う背景コンテナ */
+   .app-container {
      position: relative;
      width: 100vw;
      height: 100vh;
-     max-width: 430px; /* iPhoneの画面幅調整 */
      background: url('bg.jpg') no-repeat center top;
      background-size: cover;
    }
    /* 左上ステータスバーの時計 */
-//   .status-clock {
-//     position: absolute;
-//     top: 14px;  /* 画面に合わせて要微調整 */
-//     left: 36px; /* 画面に合わせて要微調整 */
-//     color: #ffffff;
-//     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-//     font-size: 15px;
-//     font-weight: 600;
-//     letter-spacing: -0.2px;
-//   }
+   .status-clock {
+     position: absolute;
+     top: 14px;
+     left: 32px;
+     color: #ffffff;
+     font-size: 15px;
+     font-weight: 600;
+     letter-spacing: -0.2px;
+     z-index: 10;
+   }
    /* 右上「更新日時」の時計 */
    .app-clock {
      position: absolute;
-     top: 154px;   /* 画面に合わせて要微調整 */
-     right: 43px;  /* 画面に合わせて要微調整 */
+     top: 224px;
+     right: 74px;
      color: #ffffff;
-     font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
-     font-size: 15px;
+     font-size: 13px;
      font-weight: 400;
      opacity: 0.9;
+     z-index: 10;
    }
 </style>
 </head>
 <body>
-<div class="screen-container">
-<!-- リアルタイムで入れ替わる時間表示 -->
+<div class="app-container">
+<!-- リアルタイム更新用テキスト -->
 <div class="status-clock" id="status-clock">00:00</div>
 <div class="app-clock" id="app-clock">00:00</div>
 </div>
@@ -69,6 +70,7 @@
      document.getElementById('status-clock').textContent = timeStr;
      document.getElementById('app-clock').textContent = timeStr;
    }
+   // 1秒ごとに現在時刻に更新
    setInterval(updateClock, 1000);
    updateClock();
 </script>
