@@ -74,24 +74,35 @@
      position: relative;
    }
 
-   /* 下部固定エリア（フッター） */
+   /* 下部固定エリア（フッター全体のラッパー） */
    .footer-fixed {
      position: relative;
      width: 100%;
-     background-color: #ffffff; /* フッター全体のベースを白に */
+     /* 背景色を「完全に透明」にして、画像の上部透過エリアを生かす */
+     background-color: transparent; 
      padding-bottom: env(safe-area-inset-bottom);
      flex-shrink: 0;
      z-index: 20;
    }
 
-   /* フッター画像の調整と背景透過（白抜き） */
+   /* iPhone下部セーフエリア（バーの裏側）だけを白で塗る設定 */
+   .footer-fixed::after {
+     content: "";
+     position: absolute;
+     bottom: 0;
+     left: 0;
+     width: 100%;
+     height: env(safe-area-inset-bottom);
+     background-color: #ffffff;
+     z-index: -1;
+   }
+
+   /* フッター画像 */
    .footer-image {
      display: block;
      width: 100%;
      height: auto;
      pointer-events: none;
-     /* 画像の白い背景部分を透過させる設定 */
-     mix-blend-mode: multiply;
    }
 </style>
 </head>
