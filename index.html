@@ -19,12 +19,11 @@
    html, body {
      width: 100%;
      height: 100%;
-     /* 画面下部にもし隙間が出ても緑色で埋まるようにする */
-     background-color: #01381b; 
+     background-color: #01381b; /* SMBCの緑色 */
      overflow: hidden;
      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Hiragino Kaku Gothic ProN", sans-serif;
    }
-   /* 画面全体を完全に覆うコンテナ（上下左右の端まで強制的に広げる） */
+   /* 画面全体を完全に覆うコンテナ */
    .app-container {
      position: fixed;
      top: 0;
@@ -33,21 +32,9 @@
      height: 100vh;
      background: url('bg.jpg') no-repeat center center;
      background-size: cover;
-     /* スマホのホームインジケータ領域も含めて完全に満たす */
      background-attachment: fixed;
    }
-   /* 左上ステータスバーの時計 */
-   .status-clock {
-     position: absolute;
-     top: max(env(safe-area-inset-top), 12px);
-     left: 24px;
-     color: #ffffff;
-     font-size: 15px;
-     font-weight: 600;
-     letter-spacing: -0.2px;
-     z-index: 10;
-   }
-   /* 右上「更新日時」の時計 */
+   /* 右上「アプリ内」の時計（位置はお好みで調整してください） */
    .app-clock {
      position: absolute;
      top: 22.4vh;
@@ -62,8 +49,7 @@
 </head>
 <body>
 <div class="app-container">
-  <!-- リアルタイム更新用テキスト -->
-  <div class="status-clock" id="status-clock">00:00</div>
+  <!-- 右上のリアルタイム更新用テキストのみ残す -->
   <div class="app-clock" id="app-clock">00:00</div>
 </div>
 <script>
@@ -72,7 +58,6 @@
      const hours = String(now.getHours()).padStart(2, '0');
      const minutes = String(now.getMinutes()).padStart(2, '0');
      const timeStr = `${hours}:${minutes}`;
-     document.getElementById('status-clock').textContent = timeStr;
      document.getElementById('app-clock').textContent = timeStr;
    }
    setInterval(updateClock, 1000);
