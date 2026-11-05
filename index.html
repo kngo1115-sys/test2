@@ -19,22 +19,26 @@
    html, body {
      width: 100%;
      height: 100%;
-     background-color: #01381b; /* SMBCの緑色 */
+     /* 画面下部にもし隙間が出ても緑色で埋まるようにする */
+     background-color: #01381b; 
      overflow: hidden;
      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Hiragino Kaku Gothic ProN", sans-serif;
    }
-   /* 画面全体を覆う背景コンテナ */
+   /* 画面全体を完全に覆うコンテナ（上下左右の端まで強制的に広げる） */
    .app-container {
-     position: relative;
+     position: fixed;
+     top: 0;
+     left: 0;
      width: 100vw;
      height: 100vh;
-     background: url('bg.jpg') no-repeat center top;
+     background: url('bg.jpg') no-repeat center center;
      background-size: cover;
+     /* スマホのホームインジケータ領域も含めて完全に満たす */
+     background-attachment: fixed;
    }
-   /* 左上ステータスバーの時計（iOSのセーフエリア変数を使用） */
+   /* 左上ステータスバーの時計 */
    .status-clock {
      position: absolute;
-     /* env(safe-area-inset-top)を使うことで、ノッチやダイナミックアイランドを避けた正確な位置に配置できます */
      top: max(env(safe-area-inset-top), 12px);
      left: 24px;
      color: #ffffff;
@@ -43,10 +47,10 @@
      letter-spacing: -0.2px;
      z-index: 10;
    }
-   /* 右上「更新日時」の時計（％指定またはvw指定にすると、画面サイズが変わってもズレにくくなります） */
+   /* 右上「更新日時」の時計 */
    .app-clock {
      position: absolute;
-     top: 22.4vh; /* px固定よりもvh（ビューポートハイト）を使うとiPhoneの機種ごとのズレを防げます */
+     top: 22.4vh;
      right: 18vw;
      color: #ffffff;
      font-size: 13px;
@@ -71,7 +75,6 @@
      document.getElementById('status-clock').textContent = timeStr;
      document.getElementById('app-clock').textContent = timeStr;
    }
-   // 1秒ごとに現在時刻に更新
    setInterval(updateClock, 1000);
    updateClock();
 </script>
