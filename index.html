@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>SMBC</title>
+<style>
+   * {
+     margin: 0;
+     padding: 0;
+     box-sizing: border-box;
+     user-select: none;
+   }
+   body {
+     background-color: #000;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     min-height: 100vh;
+     overflow: hidden;
+   }
+   /* 背景画像ラッパー */
+   .screen-container {
+     position: relative;
+     width: 100vw;
+     height: 100vh;
+     max-width: 430px; /* iPhoneの画面幅調整 */
+     background: url('bg.jpg') no-repeat center top;
+     background-size: cover;
+   }
+   /* 左上ステータスバーの時計 */
+   .status-clock {
+     position: absolute;
+     top: 14px;  /* 画面に合わせて要微調整 */
+     left: 36px; /* 画面に合わせて要微調整 */
+     color: #ffffff;
+     font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+     font-size: 15px;
+     font-weight: 600;
+     letter-spacing: -0.2px;
+   }
+   /* 右上「更新日時」の時計 */
+   .app-clock {
+     position: absolute;
+     top: 154px;   /* 画面に合わせて要微調整 */
+     right: 43px;  /* 画面に合わせて要微調整 */
+     color: #ffffff;
+     font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", sans-serif;
+     font-size: 15px;
+     font-weight: 400;
+     opacity: 0.9;
+   }
+</style>
+</head>
+<body>
+<div class="screen-container">
+<!-- リアルタイムで入れ替わる時間表示 -->
+<div class="status-clock" id="status-clock">00:00</div>
+<div class="app-clock" id="app-clock">00:00</div>
+</div>
+<script>
+   function updateClock() {
+     const now = new Date();
+     const hours = String(now.getHours()).padStart(2, '0');
+     const minutes = String(now.getMinutes()).padStart(2, '0');
+     const timeStr = `${hours}:${minutes}`;
+     document.getElementById('status-clock').textContent = timeStr;
+     document.getElementById('app-clock').textContent = timeStr;
+   }
+   setInterval(updateClock, 1000);
+   updateClock();
+</script>
+</body>
+</html>
