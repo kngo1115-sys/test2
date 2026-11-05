@@ -17,7 +17,8 @@
    html, body {
      width: 100%;
      height: 100%;
-     background-color: #01381b;
+     /* 背景の緑色を指定色に変更 */
+     background-color: #1C4733;
      overflow: hidden;
      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", sans-serif;
    }
@@ -43,10 +44,10 @@
      background: url('header.jpg') no-repeat center top;
      background-size: 100% auto;
      z-index: 30;
-     pointer-events: none; /* タップを下のスクロールに透過させる */
+     pointer-events: none;
    }
    .header-fixed * {
-     pointer-events: auto; /* 時計などの要素はタップ可能に戻す */
+     pointer-events: auto;
    }
 
    /* ヘッダー内のiPhone風ステータスバー時計 */
@@ -60,7 +61,7 @@
      letter-spacing: -0.3px;
    }
 
-   /* 中央スクロール領域（画面全体に広げ、上下にヘッダー・フッター分のパディングを確保） */
+   /* 中央スクロール領域 */
    .scroll-content {
      position: absolute;
      top: 0;
@@ -69,7 +70,6 @@
      height: 100%;
      overflow-y: auto;
      -webkit-overflow-scrolling: touch;
-     /* ヘッダーとフッターに内容が隠れないように余白を取る */
      padding-top: calc(180px + env(safe-area-inset-top));
      padding-bottom: calc(70px + env(safe-area-inset-bottom));
      z-index: 10;
@@ -83,7 +83,7 @@
      position: relative;
    }
 
-   /* 下部固定フッター（中央スクロールの上に重ねる） */
+   /* 下部固定フッター */
    .footer-fixed {
      position: absolute;
      bottom: 0;
@@ -91,11 +91,9 @@
      width: 100%;
      background-color: transparent;
      z-index: 30;
-     /* フッター自体の余白部分は、下のスクロール操作ができるように貫通させる */
      pointer-events: none; 
    }
 
-   /* フッター画像（ボタンやアイコン部分はタッチ操作できるようにする） */
    .footer-image {
      display: block;
      width: 100%;
@@ -124,12 +122,12 @@
     <div class="ios-status-clock" id="ios-status-clock">00:00</div>
   </div>
 
-  <!-- スクロール可能領域（フッターと重なるように画面全体に配置） -->
+  <!-- スクロール可能領域 -->
   <div class="scroll-content">
     <div class="scroll-bg"></div>
   </div>
 
-  <!-- 下部固定フッター（最前面に重ねる） -->
+  <!-- 下部固定フッター -->
   <div class="footer-fixed">
     <img src="footer.png" alt="footer" class="footer-image">
   </div>
