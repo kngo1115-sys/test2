@@ -19,7 +19,7 @@
    html, body {
      width: 100%;
      height: 100%;
-     background-color: #01381b; /* 上下に隙間が出ても馴染むSMBCの緑色 */
+     background-color: #01381b; /* SMBCの緑色 */
      overflow: hidden;
      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Hiragino Kaku Gothic ProN", sans-serif;
    }
@@ -31,22 +31,23 @@
      background: url('bg.jpg') no-repeat center top;
      background-size: cover;
    }
-   /* 左上ステータスバーの時計 */
+   /* 左上ステータスバーの時計（iOSのセーフエリア変数を使用） */
    .status-clock {
      position: absolute;
-     top: 14px;
-     left: 32px;
+     /* env(safe-area-inset-top)を使うことで、ノッチやダイナミックアイランドを避けた正確な位置に配置できます */
+     top: max(env(safe-area-inset-top), 12px);
+     left: 24px;
      color: #ffffff;
      font-size: 15px;
      font-weight: 600;
      letter-spacing: -0.2px;
      z-index: 10;
    }
-   /* 右上「更新日時」の時計 */
+   /* 右上「更新日時」の時計（％指定またはvw指定にすると、画面サイズが変わってもズレにくくなります） */
    .app-clock {
      position: absolute;
-     top: 224px;
-     right: 74px;
+     top: 22.4vh; /* px固定よりもvh（ビューポートハイト）を使うとiPhoneの機種ごとのズレを防げます */
+     right: 18vw;
      color: #ffffff;
      font-size: 13px;
      font-weight: 400;
@@ -57,9 +58,9 @@
 </head>
 <body>
 <div class="app-container">
-<!-- リアルタイム更新用テキスト -->
-<div class="status-clock" id="status-clock">00:00</div>
-<div class="app-clock" id="app-clock">00:00</div>
+  <!-- リアルタイム更新用テキスト -->
+  <div class="status-clock" id="status-clock">00:00</div>
+  <div class="app-clock" id="app-clock">00:00</div>
 </div>
 <script>
    function updateClock() {
