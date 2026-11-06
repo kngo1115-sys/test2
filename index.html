@@ -53,10 +53,10 @@
    /* ヘッダー内のiPhone風ステータスバー時計 */
    .ios-status-clock {
      position: absolute;
-     top: calc(env(safe-area-inset-top) + 2px);
-     left: 32px;
+     top: calc(env(safe-area-inset-top) - 10px);
+     left: 40px;
      color: #ffffff;
-     font-size: 15px;
+     font-size: 18px;
      font-weight: 600;
      letter-spacing: -0.3px;
    }
@@ -70,7 +70,7 @@
      height: 100%;
      overflow-y: auto;
      -webkit-overflow-scrolling: touch;
-     padding-top: calc(90px + env(safe-area-inset-top));
+     padding-top: calc(10px + env(safe-area-inset-top));
      padding-bottom: calc(70px + env(safe-area-inset-bottom));
      z-index: 10;
    }
