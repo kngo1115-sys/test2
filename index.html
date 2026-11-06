@@ -75,11 +75,28 @@
      z-index: 10;
    }
 
-   /* 画像本体を全幅で配置し、縦長に合わせて自然に高さを伸ばす */
+   .scroll-wrapper {
+     position: relative;
+     width: 100%;
+   }
+
+   /* 画像本体を全幅で配置 */
    .scroll-image {
      display: block;
      width: 100%;
      height: auto;
+   }
+
+   /* 「現在」の横に配置するエリア内時計 */
+   .content-clock {
+     position: absolute;
+     top: 18px; /* 画像上部からの垂直位置（画像サイズに合わせて要調整） */
+     right: 80px; /* 「現在」テキストの左隣に収まる水平位置（画像サイズに合わせて要調整） */
+     color: #ffffff;
+     font-size: 13px;
+     font-weight: 400;
+     opacity: 0.9;
+     z-index: 15;
    }
 
    /* 下部固定フッター */
@@ -121,9 +138,13 @@
     <div class="ios-status-clock" id="ios-status-clock">00:00</div>
   </div>
 
-  <!-- スクロール可能領域（content.jpgをimgタグで直接配置） -->
+  <!-- スクロール可能領域 -->
   <div class="scroll-content">
-    <img src="content.jpg" alt="content" class="scroll-image">
+    <div class="scroll-wrapper">
+      <img src="content.jpg" alt="content" class="scroll-image">
+      <!-- 「現在」左側のリアルタイム時計 -->
+      <div class="content-clock" id="content-clock">00:00</div>
+    </div>
   </div>
 
   <!-- 下部固定フッター -->
@@ -138,7 +159,10 @@
      const hours = String(now.getHours()).padStart(2, '0');
      const minutes = String(now.getMinutes()).padStart(2, '0');
      const timeStr = `${hours}:${minutes}`;
+
+     // ステータスバーと「現在」横の両方の時計を同時更新
      document.getElementById('ios-status-clock').textContent = timeStr;
+     document.getElementById('content-clock').textContent = timeStr;
    }
    setInterval(updateClock, 1000);
    updateClock();
