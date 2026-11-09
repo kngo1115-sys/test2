@@ -153,12 +153,11 @@
   <!-- スクロール可能領域 -->
   <div class="scroll-content" id="scroll-container">
     <div class="scroll-wrapper">
-      <!-- 画像にid="content-img"を付与 -->
       <img src="content.jpg?v=2" alt="content" class="scroll-image" id="content-img">
       <!-- 「現在」左側のリアルタイム時計 -->
       <div class="content-clock" id="content-clock">00:00</div>
 
-      <!-- 残高の白いボックス用のリンク（クリックで画像を切り替え） -->
+      <!-- 残高の白いボックス用のリンク（クリックで content2.jpg へ固定切り替え） -->
       <a href="#" class="account-box-link" id="switch-trigger"></a>
     </div>
   </div>
@@ -183,22 +182,20 @@
    setInterval(updateClock, 1000);
    updateClock();
 
-   // クリック時に画像を content.jpg と content2.jpg で切り替える処理
+   // クリック時に content2.jpg へ切り替え、時計を非表示にする（往復なし）
    document.getElementById('switch-trigger').addEventListener('click', function(e) {
-     e.preventDefault(); // ページが上にジャンプするのを防ぐ
+     e.preventDefault();
      const img = document.getElementById('content-img');
-     const container = document.getElementById('scroll-container');
+     const contentClock = document.getElementById('content-clock');
 
-     if (img.src.includes('content2.jpg')) {
-       // 現在が content2.jpg なら元の content.jpg に戻す
-       img.src = 'content.jpg?v=2';
-     } else {
-       // それ以外なら content2.jpg に切り替える
-       img.src = 'content2.jpg?v=1';
-     }
+     // 常に content2.jpg に変更
+     img.src = 'content2.jpg?v=1';
+     
+     // スクロール領域内のリアルタイム時計を非表示にする
+     contentClock.style.display = 'none';
 
-     // 画像切り替え時にスクロール位置を一番上に戻したい場合は、以下のコメントアウトを外してください
-     // container.scrollTop = 0;
+     // ※もしクリック時に不要になったリンク（残高ボックスのタップ判定）自体を無効化したい場合は、下の行のコメントアウトを外してください
+     // this.style.pointerEvents = 'none';
    });
 </script>
 </body>
