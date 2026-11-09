@@ -99,17 +99,16 @@
      z-index: 15;
    }
 
-   /* 残高の白いボックス用のクリックエリア（調整用黄色枠付き） */
+   /* 残高の白いボックス用のクリックエリア（透明） */
    .account-box-link {
      position: absolute;
-     top: 60px;
+     top: 40px;          
      left: 4%;
      width: 92%;
      height: 100px;
-     background-color: rgba(255, 255, 0, 0.35); /* 半透明の黄色 */
-     border: 2px solid #ffff00;                  /* 黄色の枠線 */
      z-index: 20;
      cursor: pointer;
+     -webkit-tap-highlight-color: transparent;
    }
 
    /* 下部固定フッター */
@@ -130,18 +129,17 @@
      pointer-events: auto; 
    }
 
-   /* フッターの左側（ホームアイコン）用のクリックエリア（調整用黄色枠付き） */
+   /* フッターの左側（ホームアイコン）用のクリックエリア（透明） */
    .footer-home-link {
      position: absolute;
-     bottom: 0px;
+     bottom: 10px;      /* ★ここを 10px にすることで、下から10px分浮かせ（上へ10px移動）ます */
      left: 0;
-     width: 20%;  
+     width: 20%;        /* 横幅を20%に指定 */
      height: 60px; 
-     background-color: rgba(255, 255, 0, 0.35); /* 半透明の黄色 */
-     border: 2px solid #ffff00;                  /* 黄色の枠線 */
      z-index: 40;
      pointer-events: auto;
      cursor: pointer;
+     -webkit-tap-highlight-color: transparent; /* タップ時の色反転を消す */
    }
 
    /* iPhone下部ホームインジケータ（バー）の裏側の白背景埋め */
@@ -172,7 +170,7 @@
       <!-- 「現在」左側のリアルタイム時計 -->
       <div class="content-clock" id="content-clock">00:00</div>
 
-      <!-- 残高の白いボックス（クリックで content2.jpg へ切り替え） -->
+      <!-- 残高の白いボックス -->
       <a href="#" class="account-box-link" id="switch-trigger"></a>
     </div>
   </div>
@@ -180,7 +178,7 @@
   <!-- 下部固定フッター -->
   <div class="footer-fixed">
     <img src="footer.png" alt="footer" class="footer-image">
-    <!-- フッター左側のホームボタン用クリックエリア -->
+    <!-- フッター左側のホームボタン -->
     <a href="#" class="footer-home-link" id="home-trigger"></a>
   </div>
 </div>
