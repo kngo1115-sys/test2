@@ -129,6 +129,19 @@
      pointer-events: auto; 
    }
 
+   /* フッターの左側（ホームアイコン）用のクリックエリア */
+   .footer-home-link {
+     position: absolute;
+     bottom: env(safe-area-inset-bottom); /* iPhoneのバーの高さを考慮 */
+     left: 0;
+     width: 20%;  /* フッター全体の左から20%分をホームボタンエリアとする */
+     height: 60px; /* フッターの高さに合わせて調整 */
+     /* background-color: rgba(0, 0, 255, 0.3); ※位置調整時はコメントアウトを外すと青く表示されます */
+     z-index: 40;
+     pointer-events: auto;
+     cursor: pointer;
+   }
+
    /* iPhone下部ホームインジケータ（バー）の裏側の白背景埋め */
    .footer-fixed::after {
      content: "";
@@ -157,7 +170,7 @@
       <!-- 「現在」左側のリアルタイム時計 -->
       <div class="content-clock" id="content-clock">00:00</div>
 
-      <!-- 残高の白いボックス用のリンク（クリックで content2.jpg へ固定切り替え） -->
+      <!-- 残高の白いボックス（クリックで content2.jpg へ切り替え） -->
       <a href="#" class="account-box-link" id="switch-trigger"></a>
     </div>
   </div>
@@ -165,6 +178,8 @@
   <!-- 下部固定フッター -->
   <div class="footer-fixed">
     <img src="footer.png" alt="footer" class="footer-image">
+    <!-- 【追加】フッター左側のホームボタン用クリックエリア -->
+    <a href="#" class="footer-home-link" id="home-trigger"></a>
   </div>
 </div>
 
@@ -182,20 +197,25 @@
    setInterval(updateClock, 1000);
    updateClock();
 
-   // クリック時に content2.jpg へ切り替え、時計を非表示にする（往復なし）
-   document.getElementById('switch-trigger').addEventListener('click', function(e) {
+   const img = document.getElementById('content-img');
+   const contentClock = document.getElementById('content-clock');
+   const accountBox = document.getElementById('switch-trigger');
+
+   // 残高ボックスクリック：content2.jpgへ切り替え＆時計非表示
+   accountBox.addEventListener('click', function(e) {
      e.preventDefault();
-     const img = document.getElementById('content-img');
-     const contentClock = document.getElementById('content-clock');
-
-     // 常に content2.jpg に変更
      img.src = 'content2.jpg?v=1';
-     
-     // スクロール領域内のリアルタイム時計を非表示にする
      contentClock.style.display = 'none';
+   });
 
-     // ※もしクリック時に不要になったリンク（残高ボックスのタップ判定）自体を無効化したい場合は、下の行のコメントアウトを外してください
-     // this.style.pointerEvents = 'none';
+   // ホームボタン（フッター左側）クリック：content.jpgに戻る＆時計再表示
+   document.getElementById('home-trigger').addEventListener('click', function(e) {
+     e.preventDefault();
+     img.src = 'content.jpg?v=2';
+     contentClock.style.display = 'block';
+     
+     // ホームに戻ったときに一番上にスクロールさせたい場合は以下のコメントアウトを外してください
+     // document.getElementById('scroll-container').scrollTop = 0;
    });
 </script>
 </body>
