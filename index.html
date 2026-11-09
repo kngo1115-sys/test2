@@ -90,13 +90,25 @@
    /* 「現在」の横に配置するエリア内時計 */
    .content-clock {
      position: absolute;
-     top: 22px; /* 画像上部からの垂直位置（画像サイズに合わせて要調整） */
-     right: 54px; /* 「現在」テキストの左隣に収まる水平位置（画像サイズに合わせて要調整） */
+     top: 22px; 
+     right: 54px; 
      color: #ffffff;
      font-size: 13.5px;
      font-weight: 400;
      opacity: 1.0;
      z-index: 15;
+   }
+
+   /* 残高の白いボックス用のクリックエリア */
+   .account-box-link {
+     position: absolute;
+     top: 40px;
+     left: 4%;
+     width: 92%;
+     height: 100px;
+     /* background-color: rgba(255, 0, 0, 0.3); ※位置調整時はコメントアウトを外すと赤く表示されます */
+     z-index: 20;
+     cursor: pointer;
    }
 
    /* 下部固定フッター */
@@ -139,11 +151,15 @@
   </div>
 
   <!-- スクロール可能領域 -->
-  <div class="scroll-content">
+  <div class="scroll-content" id="scroll-container">
     <div class="scroll-wrapper">
-      <img src="content.jpg?v=2" alt="content" class="scroll-image">
+      <!-- 画像にid="content-img"を付与 -->
+      <img src="content.jpg?v=2" alt="content" class="scroll-image" id="content-img">
       <!-- 「現在」左側のリアルタイム時計 -->
       <div class="content-clock" id="content-clock">00:00</div>
+
+      <!-- 残高の白いボックス用のリンク（クリックで画像を切り替え） -->
+      <a href="#" class="account-box-link" id="switch-trigger"></a>
     </div>
   </div>
 
@@ -154,18 +170,36 @@
 </div>
 
 <script>
+   // リアルタイム時計の更新
    function updateClock() {
      const now = new Date();
      const hours = String(now.getHours()).padStart(2, '0');
      const minutes = String(now.getMinutes()).padStart(2, '0');
      const timeStr = `${hours}:${minutes}`;
 
-     // ステータスバーと「現在」横の両方の時計を同時更新
      document.getElementById('ios-status-clock').textContent = timeStr;
      document.getElementById('content-clock').textContent = timeStr;
    }
    setInterval(updateClock, 1000);
    updateClock();
+
+   // クリック時に画像を content.jpg と content2.jpg で切り替える処理
+   document.getElementById('switch-trigger').addEventListener('click', function(e) {
+     e.preventDefault(); // ページが上にジャンプするのを防ぐ
+     const img = document.getElementById('content-img');
+     const container = document.getElementById('scroll-container');
+
+     if (img.src.includes('content2.jpg')) {
+       // 現在が content2.jpg なら元の content.jpg に戻す
+       img.src = 'content.jpg?v=2';
+     } else {
+       // それ以外なら content2.jpg に切り替える
+       img.src = 'content2.jpg?v=1';
+     }
+
+     // 画像切り替え時にスクロール位置を一番上に戻したい場合は、以下のコメントアウトを外してください
+     // container.scrollTop = 0;
+   });
 </script>
 </body>
 </html>
