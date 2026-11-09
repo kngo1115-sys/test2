@@ -66,11 +66,12 @@
      position: absolute;
      top: env(safe-area-inset-top);
      left: 0;
-     width: 60px;       
-     height: 37px;      
+     width: 60px;       /* 左端からの横幅（必要に応じて調整してください） */
+     height: 37px;      /* ヘッダーの高さに合わせる */
      z-index: 40;
      cursor: pointer;
      -webkit-tap-highlight-color: transparent;
+     /* background-color: rgba(255, 0, 0, 0.3); ※位置調整時はコメントアウトを外すと赤く表示されます */
    }
 
    /* 中央スクロール領域 */
@@ -80,12 +81,11 @@
      left: 0;
      width: 100%;
      height: 100%;
-     overflow-y: scroll; /* ★ auto から scroll に変更して慣性スクロールを安定・なめらかに */
+     overflow-y: auto;
      -webkit-overflow-scrolling: touch;
      padding-top: calc(37px + env(safe-area-inset-top));
      padding-bottom: calc(70px + env(safe-area-inset-bottom));
      z-index: 10;
-     overscroll-behavior-y: none; /* 上端・下端でのゴム伸び（バウンス）を防止 */
    }
 
    .scroll-wrapper {
@@ -174,6 +174,7 @@
   <!-- 上部固定ヘッダー -->
   <div class="header-fixed" id="header-bg">
     <div class="ios-status-clock" id="ios-status-clock">00:00</div>
+    <!-- 【追加】ヘッダー左側の「＜」戻るボタン用クリックエリア -->
     <a href="#" class="header-back-link" id="back-trigger"></a>
   </div>
 
@@ -214,19 +215,31 @@
    const img = document.getElementById('content-img');
    const headerBg = document.getElementById('header-bg');
    const contentClock = document.getElementById('content-clock');
-   const scrollContainer = document.getElementById('scroll-container');
    const accountBox = document.getElementById('switch-trigger');
    const homeTrigger = document.getElementById('home-trigger');
    const backTrigger = document.getElementById('back-trigger');
 
-   // 残高ボックスクリック：content2.jpg ＆ header2.jpg に切り替え、時計非表示 ＆ ストップ位置を一番上にリセット
+   // 共通：ホーム画面（content.jpg & header.jpg）に戻す関数
+   function goToHome(e) {
+     e.preventDefault();
+     img.src = 'content.jpg?v=2';
+     headerBg.style.backgroundImage = "url('header.jpg')";
+     contentClock.style.display = 'block';
+   }
+
+   // 残高ボックスクリック：content2.jpg ＆ header2.jpg に切り替え、時計非表示
    accountBox.addEventListener('click', function(e) {
      e.preventDefault();
      img.src = 'content2.jpg?v=1';
      headerBg.style.backgroundImage = "url('header2.jpg')";
      contentClock.style.display = 'none';
-     scrollContainer.scrollTop = 0; // 画面上部に固定
    });
 
-   // ホーム画面に戻す関数
-   function goToHome(e
+   // フッターのホームボタンクリック：元の画面に戻る
+   homeTrigger.addEventListener('click', goToHome);
+
+   // ヘッダーの「＜」ボタンクリック：元の画面に戻る
+   backTrigger.addEventListener('click', goToHome);
+</script>
+</body>
+</html>
