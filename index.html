@@ -132,14 +132,14 @@
    /* フッターの左側（ホームアイコン）用のクリックエリア（透明） */
    .footer-home-link {
      position: absolute;
-     bottom: 10px;      /* ★ここを 10px にすることで、下から10px分浮かせ（上へ10px移動）ます */
+     bottom: 10px;      /* 下から10px浮かせた位置 */
      left: 0;
-     width: 20%;        /* 横幅を20%に指定 */
+     width: 20%;        
      height: 60px; 
      z-index: 40;
      pointer-events: auto;
      cursor: pointer;
-     -webkit-tap-highlight-color: transparent; /* タップ時の色反転を消す */
+     -webkit-tap-highlight-color: transparent;
    }
 
    /* iPhone下部ホームインジケータ（バー）の裏側の白背景埋め */
@@ -158,8 +158,8 @@
 <body>
 
 <div class="app-container">
-  <!-- 上部固定ヘッダー -->
-  <div class="header-fixed">
+  <!-- 上部固定ヘッダー（id="header-bg"を付与） -->
+  <div class="header-fixed" id="header-bg">
     <div class="ios-status-clock" id="ios-status-clock">00:00</div>
   </div>
 
@@ -198,20 +198,23 @@
    updateClock();
 
    const img = document.getElementById('content-img');
+   const headerBg = document.getElementById('header-bg');
    const contentClock = document.getElementById('content-clock');
    const accountBox = document.getElementById('switch-trigger');
 
-   // 残高ボックスクリック：content2.jpgへ切り替え＆時計非表示
+   // 残高ボックスクリック：content2.jpg ＆ header2.jpg に切り替え、時計非表示
    accountBox.addEventListener('click', function(e) {
      e.preventDefault();
      img.src = 'content2.jpg?v=1';
+     headerBg.style.backgroundImage = "url('header2.jpg')";
      contentClock.style.display = 'none';
    });
 
-   // ホームボタン（フッター左側）クリック：content.jpgに戻る＆時計再表示
+   // ホームボタン（フッター左側）クリック：content.jpg ＆ header.jpg に戻る、時計再表示
    document.getElementById('home-trigger').addEventListener('click', function(e) {
      e.preventDefault();
      img.src = 'content.jpg?v=2';
+     headerBg.style.backgroundImage = "url('header.jpg')";
      contentClock.style.display = 'block';
    });
 </script>
