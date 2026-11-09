@@ -80,12 +80,12 @@
      left: 0;
      width: 100%;
      height: 100%;
-     overflow-y: auto;
+     overflow-y: scroll; /* ★ auto から scroll に変更して慣性スクロールを安定・なめらかに */
      -webkit-overflow-scrolling: touch;
      padding-top: calc(37px + env(safe-area-inset-top));
      padding-bottom: calc(70px + env(safe-area-inset-bottom));
      z-index: 10;
-     overscroll-behavior-y: none; /* ★上端・下端でのバウンス（オーバースクロール）を防止 */
+     overscroll-behavior-y: none; /* 上端・下端でのゴム伸び（バウンス）を防止 */
    }
 
    .scroll-wrapper {
@@ -229,19 +229,4 @@
    });
 
    // ホーム画面に戻す関数
-   function goToHome(e) {
-     e.preventDefault();
-     img.src = 'content.jpg?v=2';
-     headerBg.style.backgroundImage = "url('header.jpg')";
-     contentClock.style.display = 'block';
-     scrollContainer.scrollTop = 0; // ホームに戻った時も一番上へ
-   }
-
-   // フッターのホームボタンクリック：元の画面に戻る
-   homeTrigger.addEventListener('click', goToHome);
-
-   // ヘッダーの「＜」ボタンクリック：元の画面に戻る
-   backTrigger.addEventListener('click', goToHome);
-</script>
-</body>
-</html>
+   function goToHome(e
